@@ -1,0 +1,14 @@
+{
+    "usuarios": [
+        {
+            "id_usuario": 1,
+            "usuario": "admin",
+            "nombre_completo": "Usuario de Prueba",
+            "correo": "admin@udv.com.gt",
+            "password": "$2b$12$lAJh6bdRbqrjkQYDVM907etTBKIINI/6b/.SkwSYGA/pKNYfa0XCm",
+            "rol": "administrador",
+            "fecha_creacion": "20260622"
+
+        }
+    ]
+}
