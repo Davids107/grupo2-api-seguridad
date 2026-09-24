@@ -6,8 +6,7 @@
 
 ## 1\. Repositorio
 
-* **Nombre del repo:** `grupo2-api-seguridad-py`
-* El repo anterior en Node.js/JavaScript (`grupo2-api-seguridad`) se conserva como **backup**, no se borra ni se sigue usando.
+* **Nombre del repo:** `grupo2-api-seguridad`
 * Todo el trabajo del equipo de aquí en adelante se hace en el nuevo repo, en Python.
 
 \---
@@ -39,7 +38,7 @@ Somos el **Grupo 2 (API y Seguridad)**, que al trabajar con 5 grupos en total ab
 ## 4\. Estructura del repositorio
 
 ```
-grupo2-api-seguridad-py/
+grupo2-api-seguridad/
 ├── backend/
 │   ├── main.py
 │   ├── database.py
@@ -185,10 +184,4 @@ Cada quien escoge o se le asigna un número. Ese número define su archivo, su t
 * Reunión semanal (30-40 min): cada quien dice qué subió, qué le falta y si tiene dudas. Se prueba que las partes funcionen juntas.
 * Cualquier decisión de arquitectura (lenguaje, librerías, estructura) se avisa al grupo completo antes de aplicarla, no después.
 
-\---
-
-## 8\. Entrega urgente — esta semana
-
-Lo único obligatorio para la próxima clase es el **login funcionando** (Persona 1), aunque sea con datos de prueba. El resto del equipo puede avanzar su parte en paralelo sin esperar a que esto esté terminado.
-
-
+..
