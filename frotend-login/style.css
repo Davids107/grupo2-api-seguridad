@@ -1,78 +1,204 @@
+/* Reset general y tipografÃ­a */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f2f4f8;
-  font-family: "Segoe UI", Arial, sans-serif;
-}
-
-.tarjeta {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+body, html {
+  height: 100%;
   width: 100%;
-  max-width: 360px;
+  overflow-x: hidden;
+  background-color: #ffffff;
 }
 
-h1 {
-  font-size: 1.4rem;
-  margin-bottom: 1.2rem;
-  text-align: center;
-  color: #1f3864;
+/* Contenedor Principal */
+.signup-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
 }
 
-form {
+/* ---IZQUIERDA --- */
+.left-panel {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  justify-content: space-between;
+  padding: 40px 60px;
+  background-color: #ffffff;
 }
 
-label {
-  font-size: 0.9rem;
-  color: #333;
+/* Logo */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-input {
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+.logo-icon {
+  font-size: 20px;
+  color: #3b82f6;
 }
 
-button {
-  margin-top: 0.8rem;
-  padding: 0.7rem;
+.brand-name {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1e293b;
+}
+
+/* Formulario */
+.form-wrapper {
+  max-width: 380px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-wrapper h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 32px;
+}
+
+/* Inputs  */
+.floating-input-group {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.floating-input-group input {
+  width: 100%;
+  height: 52px;
+  padding: 0 45px 0 16px;
+  border: 1.5px solid #3b82f6; /* Borde azul activo */
+  border-radius: 8px;
+  font-size: 14px;
+  color: #334155;
+  outline: none;
+  background: transparent;
+}
+
+/* Etiqueta recortada sobre el borde superior */
+.floating-input-group label {
+  position: absolute;
+  left: 12px;
+  top: -10px;
+  background-color: #ffffff;
+  padding: 0 6px;
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.floating-input-group .icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+/* BotÃ³n Principal */
+.btn-primary {
+  width: 100%;
+  height: 48px;
+  background-color: #3b82f6;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
-  background-color: #1f3864;
-  color: white;
-  font-size: 1rem;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-button:hover {
-  background-color: #16294c;
+.btn-primary:hover {
+  background-color: #2563eb;
 }
 
-#mensaje {
-  margin-top: 1rem;
+/* Divisor */
+.divider {
+  display: flex;
+  align-items: center;
   text-align: center;
-  font-size: 0.9rem;
+  margin: 30px 0 24px;
 }
 
-#datosUsuario {
-  margin-top: 0.8rem;
-  background: #f2f4f8;
-  padding: 0.6rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  white-space: pre-wrap;
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+  padding: 0 12px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+
+/* Link Inferior */
+.footer-link {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.footer-link a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* ---Imagen DERECHA --- */
+.right-panel {
+  flex: 1;
+  /* Link imagen */
+  background: url('mi_fondo.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 40px;
+}
+
+/* Slider*/
+.slider-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  width: 24px;
+  background-color: #ffffff;
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 900px) {
+  .right-panel {
+    display: none; /* Oculta la columna en pantallas pequeÃ±as */
+  }
+  
+  .left-panel {
+    padding: 30px 20px;
+  }
 }
