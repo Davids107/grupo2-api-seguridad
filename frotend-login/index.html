@@ -27,8 +27,8 @@
         <form action="#">
           <!-- Input usuario con Outlined Label -->
           <div class="floating-input-group">
-            <input type="text" id="text" placeholder=" " required />
-            <label for="text">Usuario</label>
+            <input type="text" id="correo" placeholder=" " required />
+            <label for="correo">Usuario</label>
             <i class="fa-regular fa-user icon"></i>
           </div>
 
@@ -69,6 +69,29 @@
       </div>
     </div>
   </div>
+
+  <script>
+  document.querySelector("form").addEventListener("submit", async function(e) {
+    e.preventDefault(); // evita que la página se recargue
+
+    const correo = document.getElementById("correo").value;
+    const password = document.getElementById("password").value;
+
+    const respuesta = await fetch("http://127.0.0.1:8000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correo: correo, password: password })
+    });
+
+    const datos = await respuesta.json();
+
+    if (datos.codigo === 200) {
+      alert("Bienvenido " + datos.usuario);
+    } else {
+      alert(datos.mensaje);
+    }
+  });
+</script>
 
 </body>
 </html>
