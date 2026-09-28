@@ -2,3 +2,17 @@ fastapi==0.1.0
 uvicorn==0.53.0
 bcrypt==5.0.0
 python-jose==3.5.0
+
+# Dependencias del backend - Grupo 2 API y Seguridad
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
+sqlalchemy>=2.0
+bcrypt>=4.1
+python-dotenv>=1.0
+python-multipart>=0.0.9 # Necesario para POST /files (multipart/form-data)
+pyjwt>=2.8 # Tokens de sesion (Persona de autenticacion)
+
+# Pruebas
+pytest>=8.0
+httpx>=0.27 # Cliente que usa TestClient de FastAPI
