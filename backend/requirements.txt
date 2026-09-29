@@ -12,7 +12,7 @@ bcrypt>=4.1,<5
 python-jose[cryptography]>=3.3,<4 # JWT: Mismo que ya eligio Randy para el login
 
 sqlalchemy>=2.0,<3 # Conexion a base de datos (Persona 5)
-python-dotenv>=1.0 # leer el archivo .env
+python-dotenv>=1.0 # Leer el archivo .env
 python-multipart>=0.0.9 # Necesario si algun endpoint recibe archivos o forms
 pyjwt>=2.8 # Tokens de sesion (Persona de autenticacion)
 
