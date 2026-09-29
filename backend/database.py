@@ -1,6 +1,6 @@
 # Conexion a la base de datos - Persona 5.
 
-# IMPORTANTE (segun lo pedido): el Grupo 1 todavia no entrega su esquema, asi que este archivo se deja SIMPLE, solo con lo minimo para que los demas puedan
+# Importante: El Grupo 1 todavia no entrega su esquema, asi que este archivo se deja SIMPLE, solo con lo minimo para que los demas puedan
 # probar login/usuarios con datos de prueba. No se construye nada mas del lado de base de datos hasta que me pases los pasos/el esquema real.
 
 # Cuando llegue el esquema del Grupo 1:
