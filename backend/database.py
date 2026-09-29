@@ -29,11 +29,11 @@ SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
 
 
-def hash_password(password: str) -> str:
+def hash_password(password: str):
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
-def verify_password(password: str, password_hash: str) -> bool:
+def verify_password(password: str, password_hash: str):
     return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
 
 
@@ -59,7 +59,7 @@ def get_db():
         db.close()
 
 
-def init_db() -> None:
+def init_db():
     Base.metadata.create_all(bind=engine)
     if not USE_TEST_DATA:
         return
