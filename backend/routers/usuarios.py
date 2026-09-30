@@ -36,7 +36,7 @@ def crear_usuario(datos: UsuarioCreate): #recibe parámetro tipo class
     for u in usuarios:
         if u.get("correo") == datos.correo or u.get("id") == datos.id: #Compara el correo y el id del usuario
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
+                status_code=status.HTTP_409_CONFLICT,
                 detail="El ID o correo ya se encuentra registrado" #si los datos son iguales no acepta la creación  del usuario
             )
     #si no existe el usuario guarda la contraseña usando el método hash y los demás datos
