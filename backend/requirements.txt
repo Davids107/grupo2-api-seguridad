@@ -6,16 +6,22 @@ python-jose==3.5.0
 # Dependencias del backend - Grupo 2 API y Seguridad
 # Instalar con: pip install -r requirements.txt
 
-fastapi>=0.115,<1.0
-uvicorn[standard]>=0.30,<1.0
-bcrypt>=4.1,<5
-python-jose[cryptography]>=3.3,<4 # JWT: Mismo que ya eligio Randy para el login
+# API
+fastapi==0.142.1
+uvicorn[standard]==0.54.0
+python-multipart>=0.0.9 # Necesario si algun endpoint recibe archivos o forms (/files)
 
-sqlalchemy>=2.0,<3 # Conexion a base de datos (Persona 5)
-python-dotenv>=1.0 # Leer el archivo .env
-python-multipart>=0.0.9 # Necesario si algun endpoint recibe archivos o forms
-pyjwt>=2.8 # Tokens de sesion (Persona de autenticacion)
+# Seguridad
+bcrypt==5.0.0 # hash de contrasenas
+python-jose[cryptography]>=3.3,<4 # JWT: Mismo que ya eligio Randy para el login
+PyJWT==2.15.1  # Tokens de sesion (Persona de autenticacion)
+
+# Base de datos
+SQLAlchemy==2.1.1 # Conexion a base de datos (Persona 5)
+
+# Configuracion
+python-dotenv==1.2.3 # Leer el archivo .env
 
 # Pruebas
-pytest>=8.0
-httpx>=0.27 # Lo usa TestClient de FastAPI
+pytest==9.1.1
+httpx==0.28.1 # Lo usa TestClient de FastAPI
