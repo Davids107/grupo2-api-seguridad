@@ -13,7 +13,7 @@ python-multipart>=0.0.9 # Necesario si algun endpoint recibe archivos o forms (/
 
 # Seguridad
 bcrypt==5.0.0 # hash de contrasenas
-python-jose[cryptography]>=3.3,<4 # JWT: Mismo que ya eligio Randy para el login
+# python-jose[cryptography]==3.5.0
 PyJWT==2.15.1  # Tokens de sesion (Persona de autenticacion)
 
 # Base de datos
