@@ -58,9 +58,9 @@ def api_error(
 
 
 
-# Constructor del payload de error--------------------------
+# Constructor del payload de error
 
-def _request_id(request: Request) -> str:
+def _request_id(request: Request):
     return (
         request.headers.get("X-Request-ID")
         or request.headers.get("X-Correlation-ID")
@@ -90,11 +90,9 @@ def _build_error_payload(
     }
 
 
-# ---------------------------------------------------------------------------
 # Registro de handlers en la app FastAPI
-# ---------------------------------------------------------------------------
-def register_error_handlers(app: FastAPI) -> None:
-    """ Llamar una sola vez en main"""
+def register_error_handlers(app: FastAPI):
+    #Llamar una sola vez en main
 
     @app.exception_handler(StarletteHTTPException)
     async def _http_exception_handler(request: Request, exc: StarletteHTTPException):
