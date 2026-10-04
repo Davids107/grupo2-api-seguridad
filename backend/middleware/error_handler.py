@@ -12,17 +12,16 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 # Catálogo de códigos de error 
 class ErrorCode:
-    BAD_REQUEST         = "Falta el campo email"
-    UNAUTHORIZED        = "No autenticado"
-    INVALID_CREDENTIALS = "Credenciales invalidos"
-    #TOKEN_EXPIRED       = "TOKEN_EXPIRED"
-    FORBIDDEN           = "No tienes permisos"
-    NOT_FOUND           = "USUARIO NO ENCONTRADO "
-    CONFLICT            = "El email ya existe"
-    VALIDATION_ERROR    = "Los datos enviados no son válidos"
-   # EMPTY_UPDATE        = "EMPTY_UPDATE"
-    INTERNAL_ERROR      = "Ocurrió un error interno en el servidor"
-
+    BAD_REQUEST         = "BAD_REQUEST"
+    UNAUTHORIZED        = "UNAUTHORIZED"
+    INVALID_CREDENTIALS = "INVALID_CREDENTIALS"
+    TOKEN_EXPIRED       = "TOKEN_EXPIRED"
+    FORBIDDEN           = "FORBIDDEN"
+    NOT_FOUND           = "NOT_FOUND"
+    CONFLICT            = "CONFLICT"
+    VALIDATION_ERROR    = "VALIDATION_ERROR"
+    EMPTY_UPDATE        = "EMPTY_UPDATE"
+    INTERNAL_ERROR      = "INTERNAL_ERROR"
 
 DEFAULT_CODES: dict[int, str] = {
     400: ErrorCode.BAD_REQUEST,
