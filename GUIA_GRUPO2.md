@@ -50,7 +50,7 @@ Cada tarea dice: **archivo → qué haces** y, en *cursiva*, con quién se conec
 - `tests/test_auth.py` → pruebas: login bien, login mal (401), logout y `/me` sin token (401).
 
 **Semana 5 · martes 10-nov**
-- Revisar los 38 escenarios de QA y abrir el PR `grupo-2 → main`.
+- Revisar los 36 escenarios de QA y abrir el PR `grupo-2 → main`.
 
 ---
 
