@@ -67,7 +67,6 @@ El middleware de usuarios y roles todavía lee el encabezado `usuario-actual` y 
 - **No cumple / pendiente:** G2-34 (bloqueo), G2-31 (paginación), G2-18 a G2-22 (archivos).
 - **En proceso:** G2-01 (falta probar el JWT en endpoints protegidos).
 
-**Pasos para todos:** (1) Pull de `grupo-2`. (2) Copiar la versión de `solucion_qa/` a su archivo. (3) Correr `python -m pytest`. (4) Probar que levante la API. (5) Commit con mensaje claro, Push y avisar en el grupo.
 
 **Orden recomendado** (unos dependen de otros): Edgar (`registro.py`) → Randy (`auth_middleware.py`) → Daniel (`auth.py`) → Randy (`users.py`, `roles.py`) → Fulvio (`files.py`) → Robert (`main.py`, `config.py`, `.env.example`, `.gitignore`).
 
