@@ -17,47 +17,47 @@ El middleware de usuarios y roles todavía lee el encabezado `usuario-actual` y 
 ## Por persona
 
 ### Daniel · Persona 1 · Autenticación
-| Escenario | Prioridad | Qué falta | Archivo |
-|-|-|-|-|
-| G2-05 | Alta | `POST /auth/logout` no existe. Debe poner `revocado_en` en `sesion_token`. | `routers/auth.py` |
-| G2-07 | Media | `GET /me` devuelve 404. Debe dar usuario, roles y permisos. | `routers/auth.py` |
-| G2-34 | Baja | El login no usa el contador ni el bloqueo (5 fallos = 15 min). | `routers/auth.py` |
-| G2-36 | Baja | El login no llama a `registrar_accion()` ni `registrar_login_fallido()`. | `routers/auth.py` |
-| G2-04 | Media | Con campos vacíos devuelve 401; el QA esperaba 422 (revisar con el PM). | `routers/auth.py` |
-| G2-33 | Media | Documentar 401 en el login (`responses=`). | `routers/auth.py` |
+| Escenario | Prioridad | Qué falta | Archivo | Estado |
+|-|-|-|-|-|
+| G2-05 | Alta | `POST /auth/logout` no existe. Debe poner `revocado_en` en `sesion_token`. | `routers/auth.py` | ⏳ Pendiente |
+| G2-07 | Media | `GET /me` devuelve 404. Debe dar usuario, roles y permisos. | `routers/auth.py` | ⏳ Pendiente |
+| G2-34 | Baja | El login no usa el contador ni el bloqueo (5 fallos = 15 min). | `routers/auth.py` | ⏳ Pendiente |
+| G2-36 | Baja | El login no llama a `registrar_accion()` ni `registrar_login_fallido()`. | `routers/auth.py` | ⏳ Pendiente |
+| G2-04 | Media | Con campos vacíos devuelve 401; el QA esperaba 422 (revisar con el PM). | `routers/auth.py` | 🔎 Por confirmar con el PM |
+| G2-33 | Media | Documentar 401 en el login (`responses=`). | `routers/auth.py` | ⏳ Pendiente |
 
 ### Randy · Persona 2 · Usuarios y roles
-| Escenario | Prioridad | Qué falta | Archivo |
-|-|-|-|-|
-| G2-10, 06, 08, 09, 17, 37, 38 | Alta | Leer `Authorization: Bearer` con `verificar_token()` de Daniel y dejar de usar `usuario-actual`. Sin token = 401; sin permiso = 403. | `middleware/auth_middleware.py`, `routers/users.py`, `routers/roles.py` |
-| G2-11, 12, 26 | Media | `GET /users/{id}` no existe (da 405); debe dar 404 si no existe. | `routers/users.py` |
-| G2-31 | Baja | La lista de usuarios no pagina; usar `paginacion.py` de Edgar. | `routers/users.py` |
-| G2-33 | Media | Documentar 401 y 409 en `POST /users`; el ejemplo del 201 es un string. | `routers/users.py` |
-| Roles | Media | El código del rol es `admin` en la lista pero `requerir_rol(["administrador"])` en el POST; alinear con el PM. Además `"coordinador "` tiene un espacio al final. | `routers/roles.py` |
+| Escenario | Prioridad | Qué falta | Archivo | Estado |
+|-|-|-|-|-|
+| G2-10, 06, 08, 09, 17, 37, 38 | Alta | Leer `Authorization: Bearer` con `verificar_token()` de Daniel y dejar de usar `usuario-actual`. Sin token = 401; sin permiso = 403. | `middleware/auth_middleware.py`, `routers/users.py`, `routers/roles.py` | 🟡 En proceso |
+| G2-11, 12, 26 | Media | `GET /users/{id}` no existe (da 405); debe dar 404 si no existe. | `routers/users.py` | 🟡 Parcial |
+| G2-31 | Baja | La lista de usuarios no pagina; usar `paginacion.py` de Edgar. | `routers/users.py` | ⏳ Pendiente |
+| G2-33 | Media | Documentar 401 y 409 en `POST /users`; el ejemplo del 201 es un string. | `routers/users.py` | ⏳ Pendiente |
+| Roles | Media | El código del rol es `admin` en la lista pero `requerir_rol(["administrador"])` en el POST; alinear con el PM. Además `"coordinador "` tiene un espacio al final. | `routers/roles.py` | ⏳ Pendiente |
 
 ### Edgar · Persona 3 · Errores, paginación y registro
-| Escenario | Prioridad | Qué falta | Archivo |
-|-|-|-|-|
-| Pruebas | Alta | `tests/test_errores.py` importa `registrar_manejadores`, pero la función se llama `register_error_handlers`. Hoy `pytest` se interrumpe por esto. | `tests/test_errores.py` |
-| G2-36 | Baja | Las funciones de `registro.py` existen, pero nadie las llama; coordinar con Daniel y Randy. | `utils/registro.py` |
-| G2-30 | Media | Cumple (PASS). Revisar que 401, 403, 404, 409 y 422 salgan con el formato común. | `middleware/error_handler.py` |
+| Escenario | Prioridad | Qué falta | Archivo | Estado |
+|-|-|-|-|-|
+| Pruebas | Alta | `tests/test_errores.py` importa `registrar_manejadores`, pero la función se llama `register_error_handlers`. Hoy `pytest` se interrumpe por esto. | `tests/test_errores.py` | ⏳ Pendiente |
+| G2-36 | Baja | Las funciones de `registro.py` existen, pero nadie las llama; coordinar con Daniel y Randy. | `utils/registro.py` | ⏳ Pendiente |
+| G2-30 | Media | Cumple (PASS). Revisar que 401, 403, 404, 409 y 422 salgan con el formato común. | `middleware/error_handler.py` | ✅ Cumple (PASS) |
 
 ### Fulvio · Persona 4 · Archivos y frontend
-| Escenario | Prioridad | Qué falta | Archivo |
-|-|-|-|-|
-| G2-18 a G2-22 | Alta | Ya existe `POST /files` y valida el tipo real con `puremagic`. Falta probar G2-19 y G2-20 con el QA, descarga `GET /files/{id}` con token (G2-21), y evitar rutas manipuladas (G2-22). | `routers/files.py` |
-| G2-18 | Media | `POST /files` aún no exige token (se activa cuando Randy termine el middleware). | `routers/files.py` |
-| Pruebas | Media | Falta `tests/test_files.py`. | `tests/test_files.py` |
+| Escenario | Prioridad | Qué falta | Archivo | Estado |
+|-|-|-|-|-|
+| G2-18 a G2-22 | Alta | Ya existe `POST /files` y valida el tipo real con `puremagic`. Falta probar G2-19 y G2-20 con el QA, descarga `GET /files/{id}` con token (G2-21), y evitar rutas manipuladas (G2-22). | `routers/files.py` | 🟡 En proceso |
+| G2-18 | Media | `POST /files` aún no exige token (se activa cuando Randy termine el middleware). | `routers/files.py` | ⏳ Pendiente |
+| Pruebas | Media | Falta `tests/test_files.py`. | `tests/test_files.py` | ⏳ Pendiente |
 
 ### Robert · Persona 5 · Base del proyecto e integración
-| Semana | Qué toca | Estado |
-|-|-|-|
-| 1 | `main.py` conecta `error_handler`; `GUIA_GRUPO2.md` en la carpeta del grupo | ✅ Hecho |
-| 2 | `main.py` con los routers `roles` y `files` (G2-18 a G2-22) | ✅ Hecho. `/me` se engancha solo cuando Daniel suba `me_router`. |
-| 3 | `.env.example`, `requirements.txt`, `database.py` con `PyMySQL` y `DATABASE_URL` | ✅ Ya estaba; se agregó la opción de la base compartida. Falta probar la conexión real con tu `.env`. |
-| 4 | `README.md` con títulos y tablas; `conftest.py` | ✅ README rehecho; `conftest.py` con guarda para no tocar la base compartida. ⚠️ `pytest` completo aún se interrumpe por `test_errores.py` (Edgar). |
-| QA | G2-35 sin credenciales | PASS. Para mantenerlo: `grupo-2.txt` y `.env` nunca se suben; `semilla_local.py` se saca del repo. |
-| QA | G2-33 documentación | Pendiente: revisar `/api/v1/docs` cuando todos terminen. |
+| Semana | Qué toca | Archivo | Estado |
+|-|-|-|-|
+| 1 | `main.py` conecta `error_handler`; `GUIA_GRUPO2.md` en la carpeta del grupo | `main.py`, `GUIA_GRUPO2.md` | ✅ Hecho |
+| 2 | `main.py` con los routers `roles` y `files` (G2-18 a G2-22) | `main.py` | ✅ Hecho. `/me` se engancha solo cuando Daniel suba `me_router`. |
+| 3 | `.env.example`, `requirements.txt`, `database.py` con `PyMySQL` y `DATABASE_URL` | `.env.example`, `requirements.txt`, `database.py` | ✅ Ya estaba; se agregó la opción de la base compartida. Falta probar la conexión real con tu `.env`. |
+| 4 | `README.md` con títulos y tablas; `conftest.py` | `README.md`, `tests/conftest.py` | ✅ README rehecho; `conftest.py` con guarda para no tocar la base compartida. ⚠️ `pytest` completo aún se interrumpe por `test_errores.py` (Edgar). |
+| QA | G2-35 sin credenciales | `.gitignore` | PASS. Para mantenerlo: `grupo-2.txt` y `.env` nunca se suben; `semilla_local.py` se saca del repo. |
+| QA | G2-33 documentación | `main.py` (`/api/v1/docs`) | Pendiente: revisar `/api/v1/docs` cuando todos terminen. |
 
 ## Estado de los escenarios (resumen)
 
