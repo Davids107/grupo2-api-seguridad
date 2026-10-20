@@ -67,11 +67,24 @@ El middleware de usuarios y roles todavía lee el encabezado `usuario-actual` y 
 - **No cumple / pendiente:** G2-34 (bloqueo), G2-31 (paginación), G2-18 a G2-22 (archivos).
 - **En proceso:** G2-01 (falta probar el JWT en endpoints protegidos).
 
-## Cómo corregirlo (archivos ya probados en la carpeta `solucion_qa/`)
-
-Cada archivo de `solucion_qa/` es una versión corregida y **probada**: con ellos pasan las 12 pruebas nuevas de `tests/test_seguridad_qa.py` (G2-04, 05, 06, 07, 08, 09, 10, 12, 17, 18 a 22, 25, 27, 28, 31, 34, 36, 37 y 38). Son una **referencia**: cada persona los copia en **su propio archivo**, los revisa, los entiende y los sube con **su propia cuenta** (así se cuenta su commit).
-
 **Pasos para todos:** (1) Pull de `grupo-2`. (2) Copiar la versión de `solucion_qa/` a su archivo. (3) Correr `python -m pytest`. (4) Probar que levante la API. (5) Commit con mensaje claro, Push y avisar en el grupo.
+
+**Orden recomendado** (unos dependen de otros): Edgar (`registro.py`) → Randy (`auth_middleware.py`) → Daniel (`auth.py`) → Randy (`users.py`, `roles.py`) → Fulvio (`files.py`) → Robert (`main.py`, `config.py`, `.env.example`, `.gitignore`).
+
+| Quién | Archivo | Qué cambia |
+|-|-|-|
+| Edgar | `utils/registro.py` | `registrar_accion()` usaba columnas que no existen (`entidad`, `entidad_id`, `ip`). La tabla `auditoria` tiene `tabla`, `registro_id` e `ip_origen`. Hoy **no guarda nada** y el conteo de intentos siempre da 0. |
+| Edgar | `tests/test_errores.py` | Nombre de la función (`register_error_handlers`) y tabla falsa de auditoría con las columnas reales. |
+| Randy | `middleware/auth_middleware.py` | Lee el token Bearer, valida firma, vencimiento y sesión no revocada; 401 si falla, 403 si no tiene rol. |
+| Randy | `routers/users.py`, `routers/roles.py` | Pasan a la base; `GET /users/{id}` con 404; paginación; roles con los códigos del Grupo 1 (`admin`, `teacher`…); 401, 403, 404 y 409 documentados. |
+| Daniel | `routers/auth.py` | `POST /auth/logout`, `GET /me`, bloqueo de 5 intentos por 15 minutos, auditoría y 422 con campos vacíos. |
+| Fulvio | `routers/files.py` | Token obligatorio, archivo guardado con nombre aleatorio, `GET /files/{id}` solo para el autor o un administrador, sin salir de la carpeta. |
+| Robert | `main.py`, `config.py`, `.env.example`, `.gitignore` | Incluir `auth.me_router` (**solo después de que Daniel suba `auth.py`**) y la variable `UPLOAD_DIR`. |
+
+**Importante:**
+- El código del rol en la base es `admin` (no `administrador`). Ya está alineado en la solución.
+- Al crear usuarios el cuerpo ahora lleva `correo`, `password`, `nombres`, `apellidos` y `rol` (la base exige nombres y apellidos).
+- Después de subir todo, la lista JSON de prueba (`datos_prueba/usuarios_prueba.json`) ya no se usa y se puede borrar.
 
 ### Pendiente de decidir con el PM (Edgar)
 El `error_handler.py` responde `{"status", "error", "meta"}` y `details` como lista, pero el CONTRATO_COMUN pide `{"error": {"code", "message", "details": {}}}`. Por eso fallan 7 pruebas de `test_errores.py`. Hay que decidir si se cambia el manejador o el contrato; el QA ya dio PASS (G2-30) al formato actual.
