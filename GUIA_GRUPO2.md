@@ -16,8 +16,11 @@ Coordinador: Daniel (dancobs) · Versión 2 · 10-oct-2026
 | Formato de errores (`error_handler.py`) | Edgar |
 | Pantalla de login (`frontend-login/`) | Fulvio |
 | Esqueleto: `main.py`, `config.py`, `database.py`, `models.py`, `requirements.txt` | Robert |
+| `main.py` incluye los routers `roles` y `files` (ya importados) | Robert |
+| Middleware lee el token Bearer (falta leer al usuario desde la base) | Randy |
+| `GET /users/{id}` con 404 (falta pasarlo a la base) | Randy |
 
-**Ojo:** todavía no hay base de datos. Mientras el Grupo 1 no entregue MariaDB, trabajamos con el JSON de prueba (`g2_api/datos_prueba/usuarios_prueba.json`).
+**Ojo:** el PM entregó una base compartida (MySQL en Railway). Los datos de acceso se piden al PM y van **solo en tu `.env`**, nunca en el repo. Lo que se borra ahí lo ven los demás grupos. El script SQL del Grupo 1 todavía no está en el repo. El JSON de prueba (`g2_api/datos_prueba/usuarios_prueba.json`) ya no debe usarse para autenticar.
 
 ---
 
@@ -194,11 +197,44 @@ Para correr la API: `http://127.0.0.1:8000/api/v1/docs`
 ## 7. Pendientes con otros grupos
 
 - **Grupo 1:** ¿MariaDB local o servidor compartido? ¿Cuándo sube el script con datos semilla?
-- **Grupos 3 y 5:** ¿necesitan un rol "autoridad" para autorizar programas?
-- **Todos:** el código de rol es `administrador` o `admin`. Hay que alinearlo.
+- **Grupos 3 y 5:** ¿necesitan un rol "autoridad" para - **Todos:** el código de rol es `admin` (el del Grupo 1; los demás: `coordinator`, `teacher`, `reviewer`, `authority`, `auditor`). Hay que alinear el código que dice `administrador`.
 
 ---
 
 ## 8. Pendientes del QA (Update No. 1 · 17-oct)
 
-Allison (QA) entregó el primer informe. El detalle por persona está en `PENDIENTES_QA.md` (misma carpeta). Lo más urgente: el middleware de usuarios y roles debe leer el JWT (`Authorization: Bearer`) y no el encabezado `usuario-actual` (**Randy**, usando `verificar_token()` de Daniel). Después: logout y `/me` (**Daniel**), el import de `test_errores.py` (**Edgar**) y las pruebas de archivos (**Fulvio**).
+Allison Espaderos (QA) entregó el primer informe y creó las tareas en el Planner (plan «2. Api y Seguridad - Allison»). El detalle por persona está en `PENDIENTES_QA.md` (misma carpeta). Las tarjetas del Planner muestran fecha **21/10** y dicen que las correcciones deben quedar disponibles para un nuevo retest.
+
+### 8.1 Tareas del Planner
+
+Las tres tareas están «No iniciado», prioridad en el nombre, etiqueta «Grupo 2» y **sin responsable asignado**: son de todo el grupo. El texto de cada punto aparece cortado en las capturas; abajo va lo visible.
+
+| Prioridad | Punto | Escenarios | Quién lo resuelve |
+|-|-|-|-|
+| 🔴 Alta | 1. Autenticación y autorización JWT | G2-06, 08, 09, 10, 37, 38 (la lista se corta en «G2-3…») | Randy (middleware); Daniel (`verificar_token`) |
+| 🔴 Alta | 2. Cierre de sesión: implementar `logout` | G2-05 | Daniel |
+| 🔴 Alta | 3. Control de acceso a recursos | G2-17 | Randy; Fulvio (archivos) |
+| 🟡 Media | 1. Consulta del usuario autenticado: implementar `/me` | G2-07 | Daniel |
+| 🟡 Media | 2. Consulta individual de usuarios | G2-12 (y G2-11) | Randy |
+| 🟡 Media | 3. Manejo de recursos inexistentes | G2-26 | Randy; Fulvio (`/files/{id}`) |
+| 🟡 Media | 4. Documentación OpenAPI/Swagger | G2-33 | Todos; Robert revisa al final |
+| ⚪ Baja | 1. Paginación de usuarios | G2-31 | Randy; Edgar (`paginacion.py`) |
+| ⚪ Baja | 2. Bloqueo por intentos fallidos | G2-34 | Daniel; Edgar (`registro.py`) |
+| ⚪ Baja | 3. Registro de auditoría | G2-36 | Daniel y Randy; Edgar (`registro.py`) |
+
+Notas del QA: en **Alta**, «las correcciones deben estar disponibles para retest y los escenarios afectados deben poder verificarse nuevamente por QA». En **Media**, «las funcionalidades pendientes deben quedar disponibles y documentadas para permitir la ejecución de las pruebas». **Baja** no trae notas. Falta copiar el texto del tablero «Update No. 1 17/10».
+
+### 8.2 Semana 2 (martes 20-oct) con escenarios
+
+| Persona | Tarea | Escenarios QA |
+|-|-|-|
+| Daniel | `POST /auth/logout` revoca el token | G2-05 |
+| Daniel | `GET /me` sin contraseña | G2-07 |
+| Randy | Middleware lee `Authorization: Bearer` desde la **base** (no del JSON) | G2-06, 08, 09, 10, 17, 37, 38 |
+| Edgar | `registro.py` guarda en la tabla `auditoria` (columnas `tabla`, `registro_id`, `ip_origen`) | G2-36 |
+| Fulvio | `POST /files` con token, tipo real y 5 MB | G2-18, 19, 20 |
+| Robert | `main.py` con los routers `roles` y `files` | G2-18 a G2-22 y G2-33 |
+
+### 8.3 Cuando alguien corrija
+
+1. Sube a `grupo-2` con su propia cuenta. 2. Avisa en el grupo. 3. Se le avisa a Allison para que repita el escenario (retest).
