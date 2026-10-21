@@ -8,19 +8,27 @@ Coordinador: Daniel (dancobs) · Versión 2 · 10-oct-2026
 
 ## 1. Dónde estamos
 
-| Ya está hecho | Quién |
-|-|-|
-| Migración al repo oficial, rama `grupo-2` | Todos |
-| Login (`POST /api/v1/auth/login`) | Daniel |
-| Listar, crear y actualizar usuarios (`/api/v1/users`) | Randy |
-| Formato de errores (`error_handler.py`) | Edgar |
-| Pantalla de login (`frontend-login/`) | Fulvio |
-| Esqueleto: `main.py`, `config.py`, `database.py`, `models.py`, `requirements.txt` | Robert |
-| `main.py` incluye los routers `roles` y `files` (ya importados) | Robert |
-| Middleware lee el token Bearer (falta leer al usuario desde la base) | Randy |
-| `GET /users/{id}` con 404 (falta pasarlo a la base) | Randy |
+**Leyenda:** ✅ Hecho y verificable en el repo · 🔵 Implementado, falta validación o retest de QA · ⏳ Pendiente de implementar
 
-**Ojo:** el PM entregó una base compartida (MySQL en Railway). Los datos de acceso se piden al PM y van **solo en tu `.env`**, nunca en el repo. Lo que se borra ahí lo ven los demás grupos. El script SQL del Grupo 1 todavía no está en el repo. El JSON de prueba (`g2_api/datos_prueba/usuarios_prueba.json`) ya no debe usarse para autenticar.
+| Estado | Qué | Quién |
+|-|-|-|
+| ✅ | Migración al repo oficial, rama `grupo-2` | Todos |
+| ✅ | Esqueleto: `main.py`, `config.py`, `database.py`, `models.py`, `requirements.txt` | Robert |
+| ✅ | `main.py` incluye los routers `auth`, `/me`, `users`, `roles` y `files` | Robert |
+| 🔵 | Login (`POST /api/v1/auth/login`): consulta la base compartida y devuelve el JWT | Daniel |
+| 🔵 | `POST /auth/logout` y `GET /me` (subidos el 20-oct; falta retest de G2-05 y G2-07) | Daniel |
+| 🔵 | Listar, crear y actualizar usuarios (`/api/v1/users`) y `GET /users/{id}` con 404 | Randy |
+| 🔵 | Formato de errores (`error_handler.py`): ya responde como el contrato común (ver 8.4) | Edgar |
+| 🔵 | Pantalla de login (`frontend-login/`) | Fulvio |
+| 🔵 | `POST /api/v1/files`: valida el tipo real con `puremagic` | Fulvio |
+| ⏳ | Middleware: leer al usuario desde la base, revisar sesión no revocada y rol `admin` (hoy usa la lista JSON) | Randy |
+| ⏳ | `users.py` y `roles.py` pasados a la base | Randy |
+| ⏳ | Archivos: token obligatorio en `POST /files`, `GET /files/{id}` y registro en la tabla `archivo` | Fulvio |
+| ⏳ | Bloqueo por intentos y auditoría: `registro.py` ya existe, pero login y logout todavía no lo llaman | Daniel y Edgar |
+| ⏳ | Paginación en `GET /users` (`paginacion.py` existe, `users.py` no la usa) | Randy |
+| ⏳ | `pytest` completo: hoy 15 pruebas fallan por `error_handler.py` (ver 8.4) | Edgar |
+
+**Ojo:** el PM entregó una base compartida (MySQL en Railway). Los datos de acceso se piden al PM y van **solo en tu `.env`**, nunca en el repo. Lo que se borra ahí lo ven los demás grupos. El script SQL del Grupo 1 todavía no está en el repo. El login y la sesión ya usan la base; `users.py` y el middleware todavía leen el JSON de prueba (`g2_api/datos_prueba/usuarios_prueba.json`), que ya no debe usarse para autenticar.
 
 ---
 
@@ -237,4 +245,15 @@ Notas del QA: en **Alta**, «las correcciones deben estar disponibles para retes
 
 ### 8.3 Cuando alguien corrija
 
-1. Sube a `grupo-2` con su propia cuenta. 2. Avisa en el grupo. 3. Se le avisa a Allison para que repita el escenario (retest).
+1. Sube a `grupo-2` con su propia cuenta. 2. Avisa en el grupo. 3. Se le avisa a Allison **en el grupo** (no por privado), para que el PM vea el avance de todos, y ella repite el escenario (retest).
+
+### 8.4 Observaciones de Allison sobre esta guía (21-oct)
+
+Allison revisó `GUIA_GRUPO2.md` y `PENDIENTES_QA.md`. Ella indica que la prioridad principal sigue siendo corregir la autenticación y autorización JWT. Lo que se ajustó:
+
+| Observación de Allison | Qué quedó en la guía |
+|-|-|
+| Diferenciar lo implementado de lo pendiente de validación por QA | La sección 1 ahora marca cada punto como ✅, 🔵 o ⏳. `logout` y `/me` están subidos (Daniel, 20-oct) y quedan en 🔵 hasta el retest. |
+| Actualizar el estado de archivos y de la integración con la base | `POST /files` existe, pero no exige token, no hay `GET /files/{id}` y no registra en la tabla `archivo`. Login y sesión usan la base; `users.py` y el middleware siguen con el JSON. |
+| Inconsistencia entre el formato de errores actual y el contrato común | `error_handler.py` (20-oct) ya responde `{"error": {"code", "message", "details": {}}}`, igual que `CONTRATO_COMUN.md`. G2-30 dio PASS con el formato anterior, así que se repite. |
+| Problema en las pruebas automáticas y en las funciones de auditoría | `pytest` completo: 15 fallan y 14 pasan. En `error_handler.py` (línea 45) `DEFAULT_MESSAGES` quedó dentro de unas comillas `''''...'''` y no existe; Edgar lo corrige. `registro.py` ya usa `tabla`, `registro_id` e `ip_origen`, pero login y logout no lo llaman (G2-36). |
